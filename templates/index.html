@@ -1,6 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>{{ page.title }}</h2>
-    {{ page.html|safe }}
+	<div class="control-group">
+		<label>Site URL</label>
+		<div class="controls">
+			<input type="url" placeholder="e.g. http://www.facebook.com">
+		</div>
+	</div>
+	<div class="control-group">
+		<label>Enter your password</label>
+		<div class="controls">
+			<input type="password" required>
+		</div>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<input type="submit" class="btn btn-primary btn-large" value="Generate">
+		</div>
+	</div>
 {% endblock content %}
