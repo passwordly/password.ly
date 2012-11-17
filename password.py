@@ -1,6 +1,8 @@
 import bcrypt
 import hmac
 
+bcrypt_alphabet = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
 def take(N, bignum):
   mod = bignum % N
   bignum = bignum / N
@@ -14,8 +16,21 @@ def convertBase(result, alphabet):
   value = [alphabet.index(x) for x in result][::-1]
   return sum([value[k] * len(alphabet)**k for k in range(len(value))])
 
+def generateSalt(password, site):
+  result = hmac.new(password, site)
+
+  bignum = 0
+  for l in result.digest():
+    bignum = (bignum * 256) + ord(l)
+
+  salt = ''
+  for k in range(22):
+    letter, bignum = choice(bcrypt_alphabet, bignum)
+    salt += letter
+
+  return salt
+
 def generatePassword(password, site):
-  bcrypt_alphabet = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
   letters = 'abcdefghijklmnopqrstuvwxyz'
   u_letters = letters.upper()
   all_letters = letters + u_letters
@@ -29,8 +44,7 @@ def generatePassword(password, site):
   if any([l not in bcrypt_alphabet for l in site]):
     raise Exception('site can only contain: %s' % bcrypt_alphabet)
 
-  salt_maker = hmac.new(((site + password)*22)[:22])
-  salt = '$2a$11$' + salt_maker.hexdigest()
+  salt = '$2a$11$' + generateSalt(password, site)
 
   bignum = convertBase(
     bcrypt.hashpw(password, salt)[len(salt):]
@@ -61,7 +75,3 @@ def generatePassword(password, site):
 
   return front + ''.join(password)
 
-print generatePassword('u$fC8*Al', 'gmail')    # s+20hU05ZV
-print generatePassword('u$fC8*Al', 'facebook') # u=@Szg5$3y
-print generatePassword('u$fC8*Al', 'itunes')   # I?33G7zy-T
-print generatePassword('G(@oR2xL', 'itunes')   # mc0*2aJUGJ
