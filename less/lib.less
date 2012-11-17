@@ -1,0 +1,140 @@
+@colour_bg_html:rgba(0,0,0,.05);
+@colour_bg_body:rgba(0,0,0,.05);
+@colour_font_default:#616d76/*was: #7d8796*/;
+@colour_font_footer:#7d8796;
+@colour_link:@base_theme_colour/*was: #ff0000*/;
+@colour_link_visited:@base_theme_colour;
+@colour_link_hover:#4a5566;
+@colour_link_active:#5f7ba3;
+@colour_font_accent:#d7ddb5;
+@colour_headings:#4a5566;
+@colour_page_heading:@colour_headings;
+@colour_section_heading:@colour_headings;
+@colour_subheading:@colour_headings;
+@colour_nav_link:#2e3239;
+@colour_nav_link_hover:@colour_link;
+@colour_nav_hover_bg:#8598a0;
+@colour_nav_link_active:@base_theme_colour;
+
+// Oldish markup technique for hiding an element off the left of the screen.
+.off-left() {position:absolute; left:-9999em;}
+
+// hide an element's text contents for image replacement. See: http://css-tricks.com/examples/ImageReplacement/
+.hide-text() {
+	text-indent:100%;
+	white-space:nowrap;
+	overflow:hidden;
+	font:0/0 a;
+}
+
+// Recalculates the sizing on a block by including borders and padding in the dimensions.
+.box() {.box-sizing();}
+
+// Box sizing
+.box-sizing(@value:border-box){
+	-webkit-box-sizing: @value;
+	-moz-box-sizing:    @value;
+	box-sizing:         @value;
+}
+
+// Dimension setting short-cuts
+.size(@width:16px, @height:16px) {
+	width:  @width;
+	height: @height;
+}
+.square(@length:16px) {
+	.size(@length, @length);
+}
+
+// Set this on a parent container so that it grows to encompass any overflowing floats
+.float-fix(){overflow:hidden;}
+
+// Strip margins and padding
+.stripped(){margin:0; padding:0;}
+// Remove list-styles, margins and padding from a nav-oriented list element
+.stripped_list(){list-style:none; .stripped();}
+
+// Border radius
+.border-radius(@radius:5px) {
+	-o-border-radius:      @radius;
+	-moz-border-radius:    @radius;
+	-webkit-border-radius: @radius;
+	border-radius:         @radius;
+	/* Prevents background bleed */
+	-moz-background-clip:    padding;
+	-webkit-background-clip: padding-box;
+	background-clip:         padding-box;
+}
+
+// Box Shadows
+.box-shadow(@style, @c) when (iscolor(@c)) {
+	-webkit-box-shadow: @style @c;
+	-moz-box-shadow:    @style @c;
+	box-shadow:         @style @c;
+}
+.box-shadow(@style, @alpha: 50%) when (isnumber(@alpha)) {
+	.box-shadow(@style, rgba(0, 0, 0, @alpha));
+}
+.no-box-shadow(@none:none){
+	-webkit-box-shadow: @none;
+	-moz-box-shadow:    @none;
+	box-shadow:         @none;
+}
+
+// Linear Gradients
+.linear-gradient(@start:#fff, @end:#000) when not (isempty(@end)){
+	background-image:-webkit-gradient(linear, left top, left bottom, from(@start), to(@end));
+	background-image:-webkit-linear-gradient(top, @start, @end);
+	background-image:-moz-linear-gradient(top, @start, @end);
+	background-image:-ms-linear-gradient(top, @start, @end);
+	background-image:-o-linear-gradient(top, @start, @end);
+	background-image:linear-gradient(to bottom, @start, @end);
+}
+.no-linear-gradient(@none:none){
+	background-image:none;
+}
+
+// Animation transitions
+.transition(@transition) {
+	-webkit-transition: @transition;
+	-moz-transition:    @transition;
+	-ms-transition:     @transition;
+	-o-transition:      @transition;
+	transition:         @transition;
+}
+
+// Opacity
+.opacity(@opacity_decimal:0.8) {
+	@opacity_percent:@opacity_decimal*100;
+	-moz-opacity:   @opacity_decimal;
+	opacity:        @opacity_decimal;
+	-ms-filter:     alpha(opacity=@opacity_percent);
+	filter:         alpha(opacity=@opacity_percent);
+	zoom:1;
+}
+
+// Text shadows
+.text-shadow(@style:0 0 1px, @c:rgba(0,0,0,.5)) when (iscolor(@c)) {
+	text-shadow:@style @c;
+}
+.text-shadow(@style, @alpha:50%) when (isnumber(@alpha)) {
+	.text-shadow(@style, rgba(0, 0, 0, @alpha));
+}
+.no-text-shadow(@none:none){
+	text-shadow:@none;
+}
+.background-size(@width:100%, @height:100%){
+	-moz-background-size:    @width @height; /* Gecko 1.9.2 (Firefox 3.6) */
+	-o-background-size:      @width @height; /* Opera 9.5 */
+	-webkit-background-size: @width @height; /* Safari 3.0 */
+	background-size:         @width @height;
+}
+
+.appearance(@style:none){
+	-moz-appearance:@style;
+	-webkit-appearance:@style;
+}
+
+.to-hsla(@colour:#ff0000, @alpha:1){
+	background-color:hsla(hue(@colour), saturation(@colour), lightness(@colour), @alpha);
+}
