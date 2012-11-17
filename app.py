@@ -16,6 +16,11 @@ def generate():
   print password, site
   return generatePassword(password, site)
 
+@app.route('/github-webhook')
+def github_hook():
+  pass
+
+def generate():
 if __name__ == '__main__':
   app.debug = True
   app.run()
