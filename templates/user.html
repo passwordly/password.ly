@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="POST" action="/generate">
+  <h3>Generate password for {{username}}</h3>
+	<div class="control-group">
+		<label>Enter your master password</label>
+		<div class="controls">
+      <input type="password" name="password" id="password" required> <span id="password-result" style="color: #C3C; font-size: 18px;"><i class="icon-ok-sign"></i></span>
+		</div>
+	</div>
+  <div class="control-group">
+    <label for="identifier">What will this new password be used for?</label>
+    <div class="controls form-inline">
+      <input type="text" name="identifier" id="identifier" required>
+    </div>
+  </div>
+	<div class="control-group">
+		<div class="controls">
+			<input type="submit" class="btn btn-primary btn-large" value="Enter">
+		</div>
+	</div>
+</form>
+
+<section id="authenticated" class="collapse">
+	<div>
+		<h3>Previously saved passwords</h3>
+		<dl>
+			<dt>Name</dt>
+			<dd>Password</dd>
+		</dl>
+	</div>
+</section>
+{% endblock content %}
+
+{% block scripts_end %}
+<script>
+	$(document).ready(function(){
+    var items = [];
+
+    $('#identifier').attr('autocomplete', 'off').typeahead({'source': function() {
+      return items; 
+    }});
+
+    $.fn.anychange = function (fn) {
+      $(this).change(fn).keyup(fn).each(fn);
+      return this;
+    };
+    $('#password').anychange(function() {
+      var correct = ($(this).val() == 'hello');
+
+      $('#password-result').css('display', correct?'inline':'none');
+
+      if (correct) {
+        items = ['gmail', 'facebook', 'google', 'google-apps'];
+      }else{
+        items = [];
+      }
+
+    });
+
+		/*$('.progressively-removed').hide();
+		$('#password').on('blur', function(){
+			//$(this).after("<span>Checking</span>");
+			$('#authenticated').collapse('toggle');
+		});*/
+	});
+</script>
+{% endblock scripts_end %}
