@@ -1,21 +1,52 @@
 {% extends "base.html" %}
 
 {% block content %}
+<form method="POST" action="/login">
+	<h3>Login</h3>
 	<div class="control-group">
-		<label>Site URL</label>
+		<label>Enter your master password</label>
 		<div class="controls">
-			<input type="url" placeholder="e.g. http://www.facebook.com">
+			<input type="password" name="password" id="password" required>
 		</div>
 	</div>
-	<div class="control-group">
-		<label>Enter your password</label>
+	<div class="control-group progressively-removed">
 		<div class="controls">
-			<input type="password" required>
+			<input type="submit" class="btn btn-primary btn-large" value="Enter">
 		</div>
 	</div>
-	<div class="control-group">
-		<div class="controls">
-			<input type="submit" class="btn btn-primary btn-large" value="Generate">
+</form>
+
+<section id="authenticated" class="collapse">
+	<form method="POST" action="/generate">
+		<h3>Generate a new password</h3>
+		<div class="control-group">
+			<label for="identifier">What will this new password be used for?</label>
+			<div class="controls form-inline">
+				<input type="text" name="identifier" id="identifier" required>
+				<input type="submit" name="action" class="btn btn-primary" value="Generate">
+			</div>
 		</div>
+		<input type="hidden" name="password" value="asdlasjdl">
+	</form>
+	
+	<div>
+		<h3>Previously saved passwords</h3>
+		<dl>
+			<dt>Name</dt>
+			<dd>Password</dd>
+		</dl>
 	</div>
+</section>
 {% endblock content %}
+
+{% block scripts_end %}
+<script>
+	$(document).ready(function(){
+		$('.progressively-removed').hide();
+		$('#password').on('blur', function(){
+			//$(this).after("<span>Checking</span>");
+			$('#authenticated').collapse('toggle');
+		});
+	});
+</script>
+{% endblock scripts_end %}

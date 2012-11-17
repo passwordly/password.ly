@@ -12,9 +12,15 @@ def index(name=None):
 @app.route('/generate', methods=['POST'])
 def generate():
   password = str(request.form['password'])
-  site = str(request.form['site'])
-  print password, site
-  return generatePassword(password, site)
+  identifier = str(request.form['identifier'])
+  
+  result = generatePassword(password, identifier)
+  data = {
+    'password': password,
+    'identifier': identifier,
+    'result': result
+  }
+  return render_template('generate.html', **data)
 
 @app.route('/github-webhook')
 def github_hook():

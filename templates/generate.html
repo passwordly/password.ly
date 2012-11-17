@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block alerts %}
+	<p class="alert alert-success">Password successfully generated</p>
+{% endblock alerts %}
+
+{% block content %}
+	<h3>Your new password for {{identifier}} is:</h3>
+	<div class="control-group success">
+		<div class="controls input-append">
+			<input type="text" id="password" value="{{result}}">
+			<input type="button" class="btn btn-success" value="Copy" id="password_copy" style="color:#fff">
+		</div>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			 <label for="register_save"><input type="checkbox" name="register_save" value="1" id="register_save" data-toggle="collapse" data-target="#register_form"> Save this to my profile</label>
+		</div>
+	</div>
+	<form action="#" id="register_form">
+		<div class="control-group">
+			<label for="register_email">Email</label>
+			<div class="controls">
+				<input type="email" id="register_email" placeholder="e.g. joe@soap.com" required>
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="controls">
+				<input type="submit" name="submit" class="btn btn-primary btn-small" value="Save">
+			</div>
+		</div>
+	</form>
+{% endblock content %}
+
+{% block scripts_end %}
+<script src="static/js/lib/jquery-1.8.2.min.js"></script>
+<script src="static/js/lib/bootstrap.min.js"></script>
+<script src="static/js/lib/ZeroClipboard.min.js"></script>
+<script>
+	ZeroClipboard.setMoviePath('static/swf/ZeroClipboard.swf');
+	$('#register_form').collapse('hide');
+	$(document).ready(function(){
+		var clip = new ZeroClipboard.Client();
+		clip.setText('');
+		clip.addEventListener( 'onMouseDown', function(client) {
+			snippet_text = $('#password').val();
+			clip.setText(snippet_text);
+		});
+		clip.glue('password_copy');
+	});
+</script>
+{% endblock scripts_end %}

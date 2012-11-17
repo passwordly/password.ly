@@ -39,11 +39,6 @@ def generatePassword(password, site):
   symbols = '!@#$%*-?+='
   length = 10
 
-
-  # Make sure the site is made entirely of bcrypt allowable letters
-  if any([l not in bcrypt_alphabet for l in site]):
-    raise Exception('site can only contain: %s' % bcrypt_alphabet)
-
   salt = '$2a$11$' + generateSalt(password, site)
 
   bignum = convertBase(
