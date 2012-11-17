@@ -1,2 +1,2 @@
-Flask==0.9
-py-bcrypt==0.2
+flask
+py-bcrypt
