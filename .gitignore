@@ -1,0 +1,7 @@
+.bash*
+.pip/*
+.profile
+.ssh/*
+.viminfo
+*.pyc
+ve/*
