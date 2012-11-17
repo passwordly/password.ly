@@ -4,27 +4,52 @@
 		<link rel="stylesheet" href="css/bootstrap.css">
 	</head>
 	<body>
-		<form class="container" action="thanks.html">
-			<div class="header">
+		<div class="container-fluid">
+			<div class="page-header">
 				<h1>password.ly</h1>
 			</div>
-			<div class="control-group">
-				<label>Generated Password</label>
-				<div class="controls">
-					<input type="text">
-				</div>
-			</div>
-			<div class="control-group">
-				<label>Email</label>
-				<div class="controls">
-					<input type="email">
+			<p class="alert alert-success">Password successfully generated</p>
+			<h3>Your new password for XXX is:</h3>
+			<div class="control-group success">
+				<div class="controls input-append">
+					<input type="text" id="password" value="PASSWORD">
+					<input type="button" class="btn btn-success" value="Copy" id="password_copy" style="color:#fff">
 				</div>
 			</div>
 			<div class="control-group">
 				<div class="controls">
-					<input type="submit" class="btn btn-primary btn-large" value="Save">
+					 <label for="register_save"><input type="checkbox" name="register_save" value="1" id="register_save" data-toggle="collapse" data-target="#register_form"> Save this to my profile</label>
 				</div>
 			</div>
-		</form>
+			<form action="registered.html" id="register_form">
+				<div class="control-group">
+					<label for="register_email">Email</label>
+					<div class="controls">
+						<input type="email" id="register_email" placeholder="e.g. joe@soap.com" required>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						<input type="submit" name="submit" class="btn btn-primary btn-small" value="Save">
+					</div>
+				</div>
+			</form>
+		</div>
+		<script src="js/lib/jquery-1.8.2.min.js"></script>
+		<script src="js/lib/bootstrap.min.js"></script>
+		<script src="js/lib/ZeroClipboard.min.js"></script>
+		<script>
+			ZeroClipboard.setMoviePath('swf/ZeroClipboard.swf');
+			$('#register_form').collapse('hide');
+			$(document).ready(function(){
+				var clip = new ZeroClipboard.Client();
+				clip.setText('');
+				clip.addEventListener( 'onMouseDown', function(client) {
+					snippet_text = $('#password').val();
+					clip.setText(snippet_text);
+				});
+				clip.glue('password_copy');
+			});
+		</script>
 	</body>
 </html>
