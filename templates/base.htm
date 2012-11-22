@@ -43,7 +43,7 @@
         $(function(){
           var clip = new ZeroClipboard.Client();
           clip.setText($('#result').val());
-          clip.glue('copy-result');
+          clip.glue('copy-result', 'copy-result-container');
           $('#copy-result').click(function() {
             alert('js failed');
           });
