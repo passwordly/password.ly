@@ -1,0 +1,9 @@
+h1 { color: #666; }
+h1 small { color: #bbb; }
+
+h1, #breakdown {
+  margin-top: 35px;
+}
+header.page-header {
+  margin-bottom: 10px;
+}

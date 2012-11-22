@@ -4,20 +4,13 @@ from password import generatePassword
 
 app = Flask(__name__)
 
-@app.route('/')
-def index(name=None):
-  return render_template('index.html', name=name)
-#return "<form action='/generate' method='post'><input type='password' name='password' /><input type='text' name='site' /><input type='submit' /></form>"
+@app.route('/', methods=['GET'])
+def landing(name=None):
+  return 'l'
+  return render_template('public/index.htm', name=name)
 
-@app.route('/<path:username>')
-def user(username):
-  params = {
-      'username': username
-  }
-  return render_template('user.html', **params)
-
-@app.route('/generate', methods=['POST'])
-def generate():
+@app.route('/', methods=['POST'])
+def public_post(name=None):
   password = str(request.form['password'])
   identifier = str(request.form['identifier'])
   
@@ -27,7 +20,27 @@ def generate():
     'identifier': identifier,
     'result': result
   }
-  return render_template('generate.html', **params)
+  return render_template('public/password.htm', **params)
+
+@app.route('/<path:username>')
+def user_landing(username):
+  params = {
+      'username': username
+  }
+  return render_template('private/index.htm', **params)
+
+@app.route('/<path:username>', methods=['POST'])
+def user_post(username):
+  password = str(request.form['password'])
+  identifier = str(request.form['identifier'])
+  
+  result = generatePassword(password, identifier)
+  params = {
+    'password': password,
+    'identifier': identifier,
+    'result': result
+  }
+  return render_template('private/password.htm', **params)
 
 @app.route('/github-webhook')
 def github_hook():

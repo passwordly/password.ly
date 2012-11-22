@@ -1,40 +1,33 @@
-{% extends "base.html" %}
+{% extends "base.htm" %}
 
 {% block content %}
-<form method="POST" action="/generate">
-  <h3>Generate password for {{username}}</h3>
+<form method="POST" action="/" class="form-horizontal">
+  <div class="well" style="background-color:#e5e5e5;border:#d5d5d5;">
 	<div class="control-group">
-		<label>Enter your master password</label>
-		<div class="controls">
-      <input type="password" name="password" id="password" required> <span id="password-result" style="color: #C3C; font-size: 18px;"><i class="icon-ok-sign"></i></span>
+		<label for="password" class="control-label">Enter master password:</label>
+		<div class="controls input-append">
+			<input type="password" name="password" id="password" class="span3" required>
+      <span id="password-result" class="add-on" style="color: #C3C; font-size: 18px;"><i class="icon-ok-sign"></i></span>
 		</div>
 	</div>
   <div class="control-group">
-    <label for="identifier">What will this new password be used for?</label>
-    <div class="controls form-inline">
-      <input type="text" name="identifier" id="identifier" required>
+    <label for="identifier" class="control-label">Create password for:</label>
+    <div class="controls">
+      <input type="text" name="identifier" id="identifier" class="span3" required>
     </div>
   </div>
 	<div class="control-group">
 		<div class="controls">
-			<input type="submit" class="btn btn-primary btn-large" value="Enter">
+			<input type="submit" class="btn btn-primary" value="Generate new password">
 		</div>
 	</div>
+  </div>
+  {% block result %}
+  {% endblock result %}
 </form>
-
-<section id="authenticated" class="collapse">
-	<div>
-		<h3>Previously saved passwords</h3>
-		<dl>
-			<dt>Name</dt>
-			<dd>Password</dd>
-		</dl>
-	</div>
-</section>
 {% endblock content %}
 
 {% block scripts_end %}
-<script>
 	$(document).ready(function(){
     var items = [];
 
@@ -65,5 +58,4 @@
 			$('#authenticated').collapse('toggle');
 		});*/
 	});
-</script>
 {% endblock scripts_end %}

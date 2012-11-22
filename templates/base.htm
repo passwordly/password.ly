@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>password.ly</title>
+		<link rel="stylesheet" href="static/css/bootstrap.css">
+		<link rel="stylesheet" href="static/css/styles.css">
+	</head>
+	<body class="container-fluid">
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+            <header class="page-header">
+              <h1>password<small>.ly</small></h1>
+            </header>
+            <article>
+              {% block alerts %}
+              {% endblock alerts %}
+              {% block content %}
+              <p>Default content to be displayed</p>
+              {% endblock content %}
+            </article>
+          </div>
+          <div id="breakdown" class="span5 offset1">
+            <h4>What is this?</h4>
+            <p>Password.ly is a super-simple tool to help you keep your password secure.
+              <strong>Given one master password, we can generate a different password
+                      for every different site you visit.</strong>
+            </p>
+            <h4>Why is that important?</h4>
+            <p>Security online is tricky. You can visit many different websites or 
+               internet cafes, and you're giving each of them access to every other
+               site if you use the same password. Its similar to giving the owner of
+               every shop you visit your house keys to drop the items off.</p>
+
+          </div>
+        </div>
+      </div>
+			<script src="static/js/lib/jquery-1.8.2.min.js"></script>
+			<script src="static/js/lib/bootstrap.min.js"></script>
+      <script src="static/js/lib/ZeroClipboard.min.js"></script>
+      <script type="text/javascript">
+        ZeroClipboard.setMoviePath('static/swf/ZeroClipboard.swf');
+        $(function(){
+          var clip = new ZeroClipboard.Client();
+          clip.setText($('#result').val());
+          clip.glue('copy-result');
+          $('#copy-result').click(function() {
+            alert('js failed');
+          });
+        });
+        {% block scripts_end %}
+        {% endblock scripts_end %}
+    </script>
+		</body>
+</html>

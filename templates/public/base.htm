@@ -1,0 +1,30 @@
+{% extends "base.htm" %}
+
+{% block content %}
+<form method="POST" action="/" class="form-horizontal">
+  <div class="well" style="background-color:#e5e5e5;border:#d5d5d5;">
+	<div class="control-group">
+		<label for="password" class="control-label">Enter master password:</label>
+		<div class="controls">
+			<input type="password" name="password" id="password" class="span3" required>
+		</div>
+	</div>
+  <div class="control-group">
+    <label for="identifier" class="control-label">Create password for:</label>
+    <div class="controls">
+      <input type="text" name="identifier" id="identifier" class="span3" required>
+    </div>
+  </div>
+	<div class="control-group">
+		<div class="controls">
+			<input type="submit" class="btn btn-primary" value="Generate new password">
+		</div>
+	</div>
+  </div>
+  {% block result %}
+  {% endblock result %}
+</form>
+{% endblock content %}
+
+{% block scripts_end %}
+{% endblock scripts_end %}
