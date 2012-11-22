@@ -6,7 +6,6 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def landing(name=None):
-  return 'l'
   return render_template('public/index.htm', name=name)
 
 @app.route('/', methods=['POST'])
