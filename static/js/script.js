@@ -22,4 +22,13 @@ $(function(){
       alert('js failed');
     });
   }
+
+  $('#result').focus(function() {
+
+    $('#result').select();
+    // Delay selecting in case of browser reading the click
+    setTimeout(function() {
+      $('#result').select();
+    }, 30);
+  });
 });

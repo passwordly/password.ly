@@ -8,7 +8,7 @@
 		<div class="controls">
       <div class="input-append">
         <input type="password" name="password" id="password" class="span3" required>
-        <span id="password-result" class="add-on" style="color: #C3C; font-size: 18px;"><i class="icon-ok-sign"></i></span>
+        <span id="password-result" class="add-on"><i class="icon-ok-sign"></i></span>
       </div>
 		</div>
 	</div>
@@ -20,7 +20,7 @@
   </div>
 	<div class="control-group">
 		<div class="controls">
-			<input type="submit" class="btn btn-primary" value="Generate new password">
+			<input type="submit" class="btn btn-primary span3" value="Generate new password">
 		</div>
 	</div>
   </div>
@@ -39,7 +39,11 @@
     $('#password').anychange(function() {
       var correct = ($(this).val() == 'hello');
 
-      $('#password-result').css('display', correct?'inline':'none');
+      if (correct) {
+        $('#password-result').html('<i class="icon-ok-circle" style="color:#494; font-size:18px;"></i>');
+      }else{
+        $('#password-result').html('<i class="icon-ban-circle" style="color:#666; font-size:18px;"></i>');
+      }
 
       if (correct) {
         items = ['gmail', 'facebook', 'google', 'google-apps'];

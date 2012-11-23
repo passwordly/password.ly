@@ -26,3 +26,7 @@ div.well.well-signup {
 div.well {
   padding-bottom: 1px;
 }
+
+input#result {
+  cursor: default;
+}
