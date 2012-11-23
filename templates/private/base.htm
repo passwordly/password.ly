@@ -2,12 +2,14 @@
 
 {% block content %}
 <form method="POST" action="/" class="form-horizontal">
-  <div class="well" style="background-color:#e5e5e5;border:#d5d5d5;">
+  <div class="well well-password" style="background-color:#e5e5e5;border:#d5d5d5;">
 	<div class="control-group">
 		<label for="password" class="control-label">Enter master password:</label>
-		<div class="controls input-append">
-			<input type="password" name="password" id="password" class="span3" required>
-      <span id="password-result" class="add-on" style="color: #C3C; font-size: 18px;"><i class="icon-ok-sign"></i></span>
+		<div class="controls">
+      <div class="input-append">
+        <input type="password" name="password" id="password" class="span3" required>
+        <span id="password-result" class="add-on" style="color: #C3C; font-size: 18px;"><i class="icon-ok-sign"></i></span>
+      </div>
 		</div>
 	</div>
   <div class="control-group">
@@ -29,16 +31,11 @@
 
 {% block scripts_end %}
 	$(document).ready(function(){
+    passwordly.autocompleteIdentifier(function() {
+      return items;
+    });
     var items = [];
 
-    $('#identifier').attr('autocomplete', 'off').typeahead({'source': function() {
-      return items; 
-    }});
-
-    $.fn.anychange = function (fn) {
-      $(this).change(fn).keyup(fn).each(fn);
-      return this;
-    };
     $('#password').anychange(function() {
       var correct = ($(this).val() == 'hello');
 
@@ -51,11 +48,5 @@
       }
 
     });
-
-		/*$('.progressively-removed').hide();
-		$('#password').on('blur', function(){
-			//$(this).after("<span>Checking</span>");
-			$('#authenticated').collapse('toggle');
-		});*/
 	});
 {% endblock scripts_end %}

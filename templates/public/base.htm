@@ -2,11 +2,11 @@
 
 {% block content %}
 <form method="POST" action="/" class="form-horizontal">
-  <div class="well" style="background-color:#e5e5e5;border:#d5d5d5;">
+  <div class="well well-password" style="background-color:#e5e5e5;border:#d5d5d5;">
 	<div class="control-group">
 		<label for="password" class="control-label">Enter master password:</label>
 		<div class="controls">
-			<input type="password" name="password" id="password" class="span3" required>
+      <input type="password" name="password" id="password" value="{{password}}" class="span3" required>
 		</div>
 	</div>
   <div class="control-group">
@@ -27,4 +27,17 @@
 {% endblock content %}
 
 {% block scripts_end %}
+	$(document).ready(function(){
+    passwordly.autocompleteIdentifier(function() {
+      return [
+        '37signals', 'about', 'amazon', 'apple', 'ask', 'babylon', 'baidu', 'bankofamerica', 'bbc', 'bing',
+        'blogger', 'cnet', 'craigslist', 'dailymail', 'dailymotion', 'dropbox', 'ebay', 'ehow', 'espn', 'etsy',
+        'facebook', 'flickr', 'foxnews', 'godaddy', 'google', 'guardian', 'gumtree', 'hotmail', 'huffingtonpost', 'imgur',
+        'itunes', 'linkedin', 'livejournal', 'mediafire', 'msn', 'myspace', 'netflix', 'paypal', 'pinterest', 'reddit',
+        'salesforce', 'samsung', 'skype', 'slideshare', 'soundcloud', 'sourceforge', 'spiegel', 'squidoo', 'tumblr', 'twitter',
+        'vimeo', 'w3schools', 'wellsfargo', 'wikia', 'wikipedia', 'wordpress', 'wsj', 'yahoo', 'youtube'
+      ];
+    });
+
+	});
 {% endblock scripts_end %}

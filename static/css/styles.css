@@ -7,3 +7,22 @@ h1, #breakdown {
 header.page-header {
   margin-bottom: 10px;
 }
+
+div.well.well-password {
+  background-color:#e5e5e5;
+  border:#d5d5d5;
+}
+
+div.well.well-result {
+  background-color:#d5f5d5;
+  border:#c5f5c5;
+}
+
+div.well.well-signup {
+  background-color:#f5f5c5;
+  border:#f5f5b5;
+}
+
+div.well {
+  padding-bottom: 1px;
+}
