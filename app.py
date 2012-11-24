@@ -35,6 +35,7 @@ def user_post(username):
   
   result = generatePassword(password, identifier)
   params = {
+    'username': username,
     'password': password,
     'identifier': identifier,
     'result': result

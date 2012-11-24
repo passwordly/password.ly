@@ -4,13 +4,15 @@
 		<title>password.ly</title>
 		<link rel="stylesheet" href="static/css/bootstrap.css">
 		<link rel="stylesheet" href="static/css/styles.css">
+    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 	</head>
 	<body class="container-fluid">
+    <div id="holder">
       <div class="container">
         <div class="row">
-          <div class="span6">
+          <div class="{% if username %}offset3 {% endif %}span6">
             <header class="page-header">
-              <h1>password<small>.ly</small></h1>
+              <h1>password<small>.ly</small><span>{% if username %}/{{username}}{% endif %}</span></h1>
             </header>
             <article>
               {% block alerts %}
@@ -20,6 +22,7 @@
               {% endblock content %}
             </article>
           </div>
+          {% if not username %}
           <div id="breakdown" class="span5 offset1">
             <h4>What is this?</h4>
             <p>Password.ly is a super-simple tool to help you keep your password secure.
@@ -32,9 +35,15 @@
                site if you use the same password. Its similar to giving the owner of
                every shop you visit your house keys to drop the items off.</p>
 
-          </div>
+           </div>
+           {% endif %}
         </div>
+        <footer>
+          <hr>
+          Built with <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>, <a href="http://bootswatch.com/amelia/">Amelia</a>, <a href="http://fortawesome.github.com/Font-Awesome/">FontAwesome</a>, <a href="http://www.google.com/webfonts/specimen/Lobster">Lobster</a>, <a href="http://code.google.com/p/zeroclipboard/">ZeroClipboard</a> and <a href="http://www.jquery.com">jQuery</a>
+        </footer>
       </div>
+    </div>
 			<script src="static/js/lib/jquery-1.8.2.min.js"></script>
 			<script src="static/js/lib/bootstrap.min.js"></script>
       <script src="static/js/lib/ZeroClipboard.min.js"></script>
@@ -42,6 +51,6 @@
       <script type="text/javascript">
         {% block scripts_end %}
         {% endblock scripts_end %}
-    </script>
+      </script>
 		</body>
 </html>

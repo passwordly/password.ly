@@ -1,5 +1,16 @@
-h1 { color: #666; }
+body {
+  background-color: #0F8790; 
+  color: #fff;
+}
+body a {
+  color: #eee;
+}
+h1 {
+  color: #eee;
+  font-family: 'Lobster', cursive;
+}
 h1 small { color: #bbb; }
+h1 span { color: #d0d0d0; }
 
 h1, #breakdown {
   margin-top: 35px;
@@ -9,18 +20,18 @@ header.page-header {
 }
 
 div.well.well-password {
-  background-color:#e5e5e5;
-  border:#d5d5d5;
+  background-color:#1C99A6;
+  border:#0C8996;
 }
 
 div.well.well-result {
-  background-color:#d5f5d5;
-  border:#c5f5c5;
+  background-color:#0C9689;
+  border:#0C9689;
 }
 
 div.well.well-signup {
-  background-color:#f5f5c5;
-  border:#f5f5b5;
+  background-color:#3B577F;
+  border:#08474E;
 }
 
 div.well {
@@ -29,4 +40,38 @@ div.well {
 
 input#result {
   cursor: default;
+}
+
+span.add-on {
+  color: #666;
+}
+
+#result-identifier {
+  cursor: default;
+}
+
+html,body{
+    height: 100%
+}
+
+#holder{
+    min-height: 100%;
+    position:relative;
+}
+
+#holder > .container {
+    padding-bottom: 100px;
+}
+
+footer {
+    height: 100px; 
+    width:100%;
+    position: absolute;
+    left: 0;
+    bottom: 0; 
+    font-size: 12px;
+}
+
+footer hr {
+  border-color: #2F97A0; 
 }

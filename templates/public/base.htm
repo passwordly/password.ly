@@ -2,11 +2,11 @@
 
 {% block content %}
 <form method="POST" action="/" class="form-horizontal">
-  <div class="well well-password" style="background-color:#e5e5e5;border:#d5d5d5;">
+  <div class="well well-password">
 	<div class="control-group">
 		<label for="password" class="control-label">Enter master password:</label>
 		<div class="controls">
-      <input type="password" name="password" id="password" value="{{password}}" class="input-block-level" required>
+      <input type="password" name="password" id="password" value="{{password}}" class="input-block-level" required {% if not result %}autofocus{% endif %}>
 		</div>
 	</div>
   <div class="control-group">
