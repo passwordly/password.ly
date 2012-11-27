@@ -25,15 +25,17 @@
           {% if not username %}
           <div id="breakdown" class="span5 offset1">
             <h4>What is this?</h4>
-            <p>Password.ly is a super-simple tool to help you keep your password secure.
-              <strong>Given one master password, we can generate a different password
-                      for every different site you visit.</strong>
-            </p>
-            <h4>Why is that important?</h4>
-            <p>Security online is tricky. You can visit many different websites or 
-               internet cafes, and you're giving each of them access to every other
-               site if you use the same password. Its similar to giving the owner of
-               every shop you visit your house keys to drop the items off.</p>
+            <p>Password.ly helps you to use a different password for each website.
+               You only need to remember one.</p>
+            <h4>How does it work?</h4>
+            <p>We use a repeatable one-way algorithm 'bcrypt' to convert your master 
+              and site name into a new password. It is not possible to obtain your
+              master password given result passwords.</p>
+            <h4>Why use password.ly?</h4>
+            <p>The way we generate passwords means we don't have to store anything
+              on our side (unless you want us to). The passwords we generate are 
+              the same whether you use our website, offline application or any
+              mobile apps.</p>
 
            </div>
            {% endif %}

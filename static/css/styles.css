@@ -41,6 +41,9 @@ div.well {
 input#result {
   cursor: default;
 }
+label#result-label {
+  margin-bottom: -30px; /* long labels don't push down button */
+}
 
 span.add-on {
   color: #666;
@@ -48,6 +51,10 @@ span.add-on {
 
 #result-identifier {
   cursor: default;
+}
+
+#create-account-group small {
+  color: #bbb;
 }
 
 html,body{
