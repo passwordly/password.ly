@@ -1,0 +1,3 @@
+users: set of all valid usernames
+passwords-<username>: list of all passwords
+sites-<username>-<password index>: hash-map of all sites for a given u/p
