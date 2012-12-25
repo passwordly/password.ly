@@ -2,12 +2,21 @@
 
 {% block result %}
 
+<form method="POST" action="/{{username}}/add-password" class="form-horizontal">
+<input type="hidden" name="password" value="{{password}}" />
+
 <div class="well well-result">
   <p>The password you entered <strong>was not recognised.</strong>
      If this is a new password and would like to save it to your
      account, we need you to enter any of your other passwords in
      order to confirm your identity.
   </p>
+	<div class="control-group">
+		<label for="confirm-password" class="control-label">Confirm new password:</label>
+		<div class="controls">
+      <input type="password" name="confirm-password" class="span3" required>
+		</div>
+	</div>
 	<div class="control-group">
 		<label for="existing-password" class="control-label">Any existing password:</label>
 		<div class="controls">
@@ -23,6 +32,7 @@
 		</div>
 	</div>
 </div>
+</form>
 
 {% endblock result %}
 
