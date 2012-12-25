@@ -16,6 +16,14 @@ def convertBase(result, alphabet):
   value = [alphabet.index(x) for x in result][::-1]
   return sum([value[k] * len(alphabet)**k for k in range(len(value))])
 
+def createHash(password):
+  salt = bcrypt.gensalt(11)
+  return bcrypt.hashpw(password, salt)
+
+def checkHash(password, hash):
+  result = bcrypt.hashpw(password, hash)
+  return (result == hash)
+
 def generateSalt(password, site):
   result = hmac.new(password, site)
 

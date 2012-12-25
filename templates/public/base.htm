@@ -1,7 +1,7 @@
 {% extends "base.htm" %}
 
 {% block content %}
-<form method="POST" action="/" class="form-horizontal">
+  <form method="POST" action="/" class="form-horizontal">
   <div class="well well-password">
 	<div class="control-group">
 		<label for="password" class="control-label">Enter master password:</label>
@@ -21,9 +21,9 @@
 		</div>
 	</div>
   </div>
+  </form>
   {% block result %}
   {% endblock result %}
-</form>
 {% endblock content %}
 
 {% block scripts_end %}

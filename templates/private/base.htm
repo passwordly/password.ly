@@ -35,21 +35,27 @@
       return items;
     });
     var items = [];
+    var results = {};
+    var $password = $('#password');
 
-    $('#password').anychange(function() {
-      var correct = ($(this).val() == 'hello');
+    $password.anychange(function() {
 
-      if (correct) {
-        $('#password-result').html('<i class="icon-ok-circle" style="color:#494; font-size:18px;"></i>');
-      }else{
-        $('#password-result').html('<i class="icon-ban-circle" style="color:#666; font-size:18px;"></i>');
-      }
+      var value = $password.val();
 
-      if (correct) {
-        items = ['gmail', 'facebook', 'google', 'google-apps'];
-      }else{
-        items = [];
-      }
+      // Callback might be called instantly and reverse this
+      $('#password-result').html('<i class="icon-ban-circle" style="color:#666; font-size:18px;"></i>');
+      items = [];
+
+      passwordly.checkPassword('{{username}}', value, function(result) {
+        if ($password.val() != value) {
+          return;
+        }
+
+        if (result) {
+          $('#password-result').html('<i class="icon-ok-circle" style="color:#494; font-size:18px;"></i>');
+          items = result.sites;
+        }
+      });
 
     });
 	});
