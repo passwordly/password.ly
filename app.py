@@ -12,7 +12,7 @@ import config
 from user import User
 from password import generatePassword, createHash, checkHash
 
-r = redis.StrictRedis(host='localhost', port=6379, db=1)
+r = redis.StrictRedis(host='localhost', port=6379, db=config.database)
 app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
@@ -62,13 +62,13 @@ def signup():
         'identifier': identifier
       }))
 
-    return redirect(config.paypal_url + '?cmd=_xclick' + \
+    return redirect((config.paypal_url + '?cmd=_xclick' + \
         '&item_name=Signup+for+password.ly:+{username}' + \
         '&item_number={username}&amount=15&business={email}' + \
         '&custom={username}' + \
         '&currency_code=USD' + \
         '&cancel_return=http://password.ly/paypal/cancl' + \
-        '&return=http://password.ly/{username}'.format(
+        '&return=http://password.ly/{username}').format(
           username=username, email=config.paypal_email
         ))
 
@@ -145,7 +145,7 @@ def github_hook():
 
 @app.route('/test')
 def test():
-  print User.signup(r, 'snapbill')
+  print User.signup(r, 'qix')
 
 if __name__ == '__main__':
   app.debug = True
