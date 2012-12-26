@@ -5,6 +5,14 @@ body {
 body a {
   color: #eee;
 }
+body a:hover {
+  color: #fff;
+}
+
+body .alert-error a {
+  color: #992A28;
+}
+
 h1 {
   color: #eee;
   font-family: 'Lobster', cursive;
