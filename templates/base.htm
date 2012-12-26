@@ -2,8 +2,8 @@
 <html lang="en">
 	<head>
 		<title>password.ly</title>
-		<link rel="stylesheet" href="static/css/bootstrap.css">
-		<link rel="stylesheet" href="static/css/styles.css">
+		<link rel="stylesheet" href="/static/css/bootstrap.css">
+		<link rel="stylesheet" href="/static/css/styles.css">
     <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 	</head>
 	<body class="container-fluid">
@@ -15,6 +15,10 @@
               <h1>password<small>.ly</small><span>{% if username %}/<span id="username">{{username}}</span>{% endif %}</span></h1>
             </header>
             <article>
+              {% if message %}
+                <div class="alert alert-success">{{message}}</div>
+              {% endif %}
+
               {% block alerts %}
               {% endblock alerts %}
               {% block content %}
@@ -46,10 +50,10 @@
         </footer>
       </div>
     </div>
-			<script src="static/js/lib/jquery-1.8.2.min.js"></script>
-			<script src="static/js/lib/bootstrap.min.js"></script>
-      <script src="static/js/lib/ZeroClipboard.min.js"></script>
-      <script src="static/js/script.js"></script>
+			<script src="/static/js/lib/jquery-1.8.2.min.js"></script>
+			<script src="/static/js/lib/bootstrap.min.js"></script>
+      <script src="/static/js/lib/ZeroClipboard.min.js"></script>
+      <script src="/static/js/script.js"></script>
       <script type="text/javascript">
         {% block scripts_end %}
         {% endblock scripts_end %}

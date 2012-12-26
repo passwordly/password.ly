@@ -13,4 +13,26 @@
     </div>
   </div>
   </form>
+  {% if username %}
+  <form class="form-horizontal" method="POST" action="/{{username}}/save-comment">
+  <input type="hidden" name="password" value="{{password}}">
+  <input type="hidden" name="identifier" value="{{identifier}}">
+
+  <div class="control-group">
+    <label class="control-label" for="comment" id="result-label">Site comments:</label>
+		<div class="controls">
+			<textarea id="comment" name="comment" class="input-block-level">{{comment}}</textarea>
+		</div>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <div id="copy-result-container" style="position:relative">
+        <input id="copy-result" type="submit" name="submit" class="btn btn-primary btn-info btn-block" value="Save updated comment">
+      </div>
+    </div>
+  </div>
+  </form>
+
+  {% endif %}
+  </form>
 

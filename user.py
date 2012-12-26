@@ -1,6 +1,65 @@
 import json
+import time
 
 from password import checkHash
+
+class UserPassword:
+  def __init__(self, db, username, index):
+    self.db = db
+    self.username = username
+    self.index = index
+
+    self.key = 'sites-%s-%d' % (self.username, self.index)
+
+  def setIdentifier(self, identifier, comment=''):
+    
+    details = self.db.hget(self.key, identifier)
+
+    if details:
+      details = json.loads(details)
+    else:
+      details = {"created": time.time()}
+
+    details["updated"] = time.time()
+
+    # If the comment changed, keep a detailed history of it
+    if "comment" in details and details["comment"] != comment:
+      if not "comment-history" in details:
+        details["comment-history"] = []
+
+      details["comment-history"].append(details["comment"])
+
+    # Ensure the comment is always saved
+    details["comment"] = comment
+
+    # Update the key in the database
+    self.db.hset(self.key, identifier, json.dumps(details))
+
+  def getDetails(self, identifier):
+    details = self.db.hget(self.key, identifier)
+    if details:
+      return json.loads(details)
+    else: return None
+
+  def getComment(self, identifier):
+    details = self.getDetails(identifier)
+
+    if details and 'comment' in details:
+      return details['comment']
+
+    return ""
+
+  def getSites(self):
+    return self.db.hkeys(self.key)
+
+  @staticmethod
+  def fetch(db, username, password):
+    'Convenience method to fetch a UserPassword object'
+    user = User.fetch(db, username)
+    if user:
+      return user.getPassword(password)
+    else:
+      return None
 
 class User:
 
@@ -8,11 +67,11 @@ class User:
     self.db = db
     self.username = username
 
-  def getPasswordIndex(self, password):
+  def getPassword(self, password):
     passwords = self.db.lrange('passwords-%s' % self.username, 0, -1)
     for index in range(len(passwords)):
       if checkHash(password=password, hash=passwords[index]):
-        return index
+        return UserPassword(self.db, self.username, index)
     return None
 
   def addPasswordHash(self, hash):
@@ -20,18 +79,15 @@ class User:
     length = self.db.rpush('passwords-%s' % self.username, hash)
 
     # Return the index (length - 1)
-    return length - 1
+    return UserPassword(self.db, self.username, length-1)
 
   def getSites(self, password):
-    index = self.getPasswordIndex(password)
+    password = self.getPassword(password)
 
-    if index is None:
+    if not password:
       return None
     else:
-      return self.db.hkeys('sites-%s-%d' % (self.username, index))
-
-  def addIdentifier(self, password_index, identifier, comment=''):
-    self.db.hset('sites-%s-%d' % (self.username, password_index), identifier, comment)
+      return password.getSites()
 
 
   @staticmethod
@@ -54,7 +110,8 @@ class User:
 
     user = User(db, username)
 
-    passwordIndex = user.addPasswordHash(details['hash'])
-    user.addIdentifier(passwordIndex, details['identifier'])
+    password = user.addPasswordHash(details['hash'])
+
+    password.setIdentifier(details['identifier'])
 
     return user
