@@ -58,7 +58,7 @@ def generatePassword(password, site):
   password = [False] * (length - 1)
 
   # Pick atleast one of each group for the rest
-  groups = [letters + u_letters, numbers, symbols]
+  groups = [letters, u_letters, numbers, symbols]
 
   for group in groups:
     # Pick one of the remaining positions for this group
