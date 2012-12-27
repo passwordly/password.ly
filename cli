@@ -1,0 +1,18 @@
+#!/usr/bin/env python
+import re
+import json
+
+import baker
+
+from user import User, UserPassword
+from passwordly import generatePassword, createHash, checkHash
+
+from util import db
+
+@baker.command
+def signup(username):
+  User.signup(db, username)
+  return 'Signup completed.'
+
+if __name__ == '__main__':
+  baker.run()

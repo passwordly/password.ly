@@ -3,3 +3,4 @@ py-bcrypt
 redis
 requests
 passwordly
+baker

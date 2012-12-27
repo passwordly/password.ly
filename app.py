@@ -9,10 +9,11 @@ import requests
 import redis
 
 import config
+
 from user import User, UserPassword
 from passwordly import generatePassword, createHash, checkHash
+from util import db
 
-r = redis.StrictRedis(host='localhost', port=6379, db=config.database)
 app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
@@ -41,7 +42,7 @@ def signup():
   
   error = None
 
-  if User.fetch(r, username):
+  if User.fetch(db, username):
     error = "The username you selected is taken."
   elif not re.match(r'^[a-z]+$', username):
     error = 'Your username can only be made of lowercase letters'
@@ -57,7 +58,7 @@ def signup():
     }
     return render_template('public/password.htm', **params)
   else:
-    r.hset('signups', username, json.dumps({
+    db.hset('signups', username, json.dumps({
         'hash': hash,
         'identifier': identifier
       }))
@@ -77,7 +78,7 @@ def user_get_sites():
   username = str(request.form['username'])
   password = str(request.form['password'])
 
-  user = User.fetch(r, username)
+  user = User.fetch(db, username)
 
   sites = user and user.getSites(password)
 
@@ -104,7 +105,7 @@ def user_post(username):
     'identifier': identifier,
   }
 
-  user_password = UserPassword.fetch(r, username, password)
+  user_password = UserPassword.fetch(db, username, password)
 
   if not user_password:
     return render_template('private/unknown.htm', **params)
@@ -125,7 +126,7 @@ def add_password(username):
     'password': password,
   }
 
-  user = User.fetch(r, username)
+  user = User.fetch(db, username)
 
   error = None
 
@@ -158,7 +159,7 @@ def save_comment(username):
     'identifier': identifier,
   }
 
-  user_password = UserPassword.fetch(r, username, password)
+  user_password = UserPassword.fetch(db, username, password)
 
   user_password.setIdentifier(identifier, comment)
 
@@ -175,7 +176,7 @@ def ipn():
   request.parameter_storage_class = ImmutableOrderedMultiDict
 
   # Store any/all ipn requests for future
-  r.rpush('ipn', json.dumps(requests.form))
+  db.rpush('ipn', json.dumps(requests.form))
 
   validate_url = config.paypal_url + '?cmd=_notify-validate'
 
@@ -185,14 +186,14 @@ def ipn():
 
   print 'Validating IPN using {url}'.format(url=validate_url)
 
-  r = requests.get(validate_url)
+  result = requests.get(validate_url)
 
-  if r.text == 'VERIFIED':
+  if result.text == 'VERIFIED':
     print "PayPal transaction was verified successfully."
   else:
     print 'Paypal IPN string {arg} did not validate'.format(arg=arg)
 
-  return r.text
+  return result.text
 
 @app.route('/github-webhook')
 def github_hook():
