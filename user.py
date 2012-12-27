@@ -1,7 +1,7 @@
 import json
 import time
 
-from password import checkHash
+from passwordly import checkHash
 
 class UserPassword:
   def __init__(self, db, username, index):
