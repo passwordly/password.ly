@@ -10,7 +10,7 @@ import redis
 
 import config
 from user import User, UserPassword
-from password import generatePassword, createHash, checkHash
+from passwordly import generatePassword, createHash, checkHash
 
 r = redis.StrictRedis(host='localhost', port=6379, db=config.database)
 app = Flask(__name__)

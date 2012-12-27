@@ -2,3 +2,4 @@ flask
 py-bcrypt
 redis
 requests
+passwordly
