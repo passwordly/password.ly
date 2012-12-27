@@ -50,7 +50,7 @@ $.fn.anychange = function (fn) {
 
 $(function(){
   if ($('#copy-result').length) {
-    ZeroClipboard.setMoviePath('static/swf/ZeroClipboard.swf');
+    ZeroClipboard.setMoviePath('/static/swf/ZeroClipboard.swf');
     var clip = new ZeroClipboard.Client();
     clip.setText($('#result').val());
     clip.glue('copy-result', 'copy-result-container');
