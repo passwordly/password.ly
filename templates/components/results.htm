@@ -27,7 +27,11 @@
   <div class="control-group">
     <div class="controls">
       <div id="copy-result-container" style="position:relative">
+        {% if comment is defined %}
         <input id="copy-result" type="submit" name="submit" class="btn btn-primary btn-info btn-block" value="Save updated comment">
+        {% else %}
+        <input id="copy-result" type="submit" name="submit" class="btn btn-primary btn-info btn-block btn-bold" value="Save new site">
+        {% endif %}
       </div>
     </div>
   </div>

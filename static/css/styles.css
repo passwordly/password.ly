@@ -57,6 +57,10 @@ span.add-on {
   color: #666;
 }
 
+.btn-bold {
+  font-weight: bold;
+}
+
 #result-identifier {
   cursor: default;
 }

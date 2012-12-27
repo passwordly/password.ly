@@ -113,7 +113,11 @@ def user_post(username):
   if not user_password:
     return render_template('private/unknown.htm', **params)
     
-  params['comment'] = user_password.getComment(identifier)
+  comment = user_password.getComment(identifier)
+  print comment is None, 'x'
+  if comment is not None:
+    params['comment'] = comment
+
   params['result'] = generatePassword(password, identifier)
 
   return render_template('private/password.htm', **params)
@@ -164,9 +168,12 @@ def save_comment(username):
 
   user_password = UserPassword.fetch(db, username, password)
 
-  user_password.setIdentifier(identifier, comment)
+  if user_password.getComment(identifier) is None:
+    params['message'] = 'Your new site was saved.'
+  else:
+    params['message'] = 'Your comment was saved.'
 
-  params['message'] = 'Your comment was saved.'
+  user_password.setIdentifier(identifier, comment)
 
   params['comment'] = user_password.getComment(identifier)
   params['result'] = generatePassword(password, identifier)

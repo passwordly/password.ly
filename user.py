@@ -47,7 +47,7 @@ class UserPassword:
     if details and 'comment' in details:
       return details['comment']
 
-    return ""
+    return None
 
   def getSites(self):
     return self.db.hkeys(self.key)
