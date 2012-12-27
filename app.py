@@ -68,9 +68,12 @@ def signup():
         '&item_number={username}&amount=15&business={email}' + \
         '&custom={username}' + \
         '&currency_code=USD' + \
-        '&cancel_return=http://password.ly/paypal/cancl' + \
+        '&notify_url={ipn}' + \
+        '&cancel_return=http://password.ly/paypal/cancel' + \
         '&return=http://password.ly/{username}').format(
-          username=username, email=config.paypal_email
+          username=username,
+          email=config.paypal_email,
+          ipn=config.ipn_url
         ))
 
 @app.route('/user/get-sites', methods=['POST'])
