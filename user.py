@@ -107,6 +107,7 @@ class User:
     details = json.loads(db.hget('signups', username))
 
     db.sadd('users', username)
+    db.hset('user-created', username, time.time())
 
     user = User(db, username)
 

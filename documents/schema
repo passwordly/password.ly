@@ -3,4 +3,7 @@ passwords-<username>: list of all passwords
 sites-<username>-<password index>: hash-map of all sites for a given u/p
   to json-encoded details
 
+hash maps of username => ...
+  user-created
+
 signups: hash map of username to json-encoded signup details
