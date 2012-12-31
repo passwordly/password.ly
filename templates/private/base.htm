@@ -8,14 +8,14 @@
 		<div class="controls">
       <div class="input-append">
         <input type="password" name="password" id="password" class="span3" value="{{password}}" {%if not password %}autofocus {% endif %} required>
-        <span id="password-result" class="add-on"><i class="icon-ok-sign"></i></span>
+        <span id="password-result" class="add-on"></span>
       </div>
 		</div>
 	</div>
   <div class="control-group">
-    <label for="identifier" class="control-label">Create password for:</label>
+    <label for="site" class="control-label">Create password for:</label>
     <div class="controls">
-      <input type="text" name="identifier" id="identifier" class="span3" {%if password %}autofocus {% endif %} required>
+      <input type="text" name="site" id="site" class="span3" {%if password %}autofocus {% endif %} required>
     </div>
   </div>
 	<div class="control-group">

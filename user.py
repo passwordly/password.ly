@@ -11,9 +11,9 @@ class UserPassword:
 
     self.key = 'sites-%s-%d' % (self.username, self.index)
 
-  def setIdentifier(self, identifier, comment=''):
+  def setSite(self, site, comment=''):
     
-    details = self.db.hget(self.key, identifier)
+    details = self.db.hget(self.key, site)
 
     if details:
       details = json.loads(details)
@@ -33,16 +33,16 @@ class UserPassword:
     details["comment"] = comment
 
     # Update the key in the database
-    self.db.hset(self.key, identifier, json.dumps(details))
+    self.db.hset(self.key, site, json.dumps(details))
 
-  def getDetails(self, identifier):
-    details = self.db.hget(self.key, identifier)
+  def getDetails(self, site):
+    details = self.db.hget(self.key, site)
     if details:
       return json.loads(details)
     else: return None
 
-  def getComment(self, identifier):
-    details = self.getDetails(identifier)
+  def getComment(self, site):
+    details = self.getDetails(site)
 
     if details and 'comment' in details:
       return details['comment']
@@ -112,6 +112,6 @@ class User:
 
     password = user.addPasswordHash(details['hash'])
 
-    password.setIdentifier(details['identifier'])
+    password.setSite(details['site'])
 
     return user

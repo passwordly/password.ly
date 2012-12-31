@@ -23,13 +23,13 @@ def landing(name=None):
 @app.route('/', methods=['POST'])
 def public_post(name=None):
   password = str(request.form['password'])
-  identifier = str(request.form['identifier'])
+  site = str(request.form['site'])
   
-  result = generatePassword(password, identifier)
+  result = generatePassword(password, site)
   params = {
     'password': password,
     'hash': createHash(password),
-    'identifier': identifier,
+    'site': site,
     'result': result
   }
   return render_template('public/password.htm', **params)
@@ -37,7 +37,7 @@ def public_post(name=None):
 @app.route('/signup', methods=['POST'])
 def signup():
   hash = str(request.form['hash'])
-  identifier = str(request.form['identifier'])
+  site = str(request.form['site'])
   username = str(request.form['username'])
   
   error = None
@@ -52,7 +52,7 @@ def signup():
   if error:
     params = {
       'hash': hash,
-      'identifier': identifier,
+      'site': site,
       'new_username': username,
       'error': error
     }
@@ -60,7 +60,7 @@ def signup():
   else:
     db.hset('signups', username, json.dumps({
         'hash': hash,
-        'identifier': identifier
+        'site': site
       }))
 
     return redirect((config.paypal_url + '?cmd=_xclick' + \
@@ -100,12 +100,12 @@ def user_landing(username):
 @app.route('/<string:username>', methods=['POST'])
 def user_post(username):
   password = str(request.form['password'])
-  identifier = str(request.form['identifier'])
+  site = str(request.form['site'])
   
   params = {
     'username': username,
     'password': password,
-    'identifier': identifier,
+    'site': site,
   }
 
   user_password = UserPassword.fetch(db, username, password)
@@ -113,12 +113,12 @@ def user_post(username):
   if not user_password:
     return render_template('private/unknown.htm', **params)
     
-  comment = user_password.getComment(identifier)
+  comment = user_password.getComment(site)
   print comment is None, 'x'
   if comment is not None:
     params['comment'] = comment
 
-  params['result'] = generatePassword(password, identifier)
+  params['result'] = generatePassword(password, site)
 
   return render_template('private/password.htm', **params)
 
@@ -157,26 +157,26 @@ def add_password(username):
 @app.route('/<string:username>/save-comment', methods=['POST'])
 def save_comment(username):
   password = str(request.form['password'])
-  identifier = str(request.form['identifier'])
+  site = str(request.form['site'])
   comment = str(request.form['comment'])
   
   params = {
     'username': username,
     'password': password,
-    'identifier': identifier,
+    'site': site,
   }
 
   user_password = UserPassword.fetch(db, username, password)
 
-  if user_password.getComment(identifier) is None:
+  if user_password.getComment(site) is None:
     params['message'] = 'Your new site was saved.'
   else:
     params['message'] = 'Your comment was saved.'
 
-  user_password.setIdentifier(identifier, comment)
+  user_password.setSite(site, comment)
 
-  params['comment'] = user_password.getComment(identifier)
-  params['result'] = generatePassword(password, identifier)
+  params['comment'] = user_password.getComment(site)
+  params['result'] = generatePassword(password, site)
 
   return render_template('private/password.htm', **params)
 

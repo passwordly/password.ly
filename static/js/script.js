@@ -3,7 +3,7 @@ var passwordly = {};
 
 passwordly.autocompleteIdentifier = function(cb) {
 
-  $('#identifier').attr('autocomplete', 'off').typeahead({'source': cb});
+  $('#site').attr('autocomplete', 'off').typeahead({'source': cb});
 
 };
 

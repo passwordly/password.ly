@@ -1,6 +1,6 @@
   <form class="form-horizontal">
   <div class="control-group">
-    <label class="control-label" for="result" id="result-label">Your password for {{identifier}}:</label>
+    <label class="control-label" for="result" id="result-label">Your password for {{site}}:</label>
 		<div class="controls">
 			<input type="text" id="result" class="input-block-level" value="{{result}}" readonly="readonly">
 		</div>
@@ -16,7 +16,7 @@
   {% if username %}
   <form class="form-horizontal" method="POST" action="/{{username}}/save-comment">
   <input type="hidden" name="password" value="{{password}}">
-  <input type="hidden" name="identifier" value="{{identifier}}">
+  <input type="hidden" name="site" value="{{site}}">
 
   <div class="control-group">
     <label class="control-label" for="comment" id="result-label">Site comments:</label>
