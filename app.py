@@ -16,6 +16,8 @@ from util import db
 
 app = Flask(__name__)
 
+app.jinja_env.line_statement_prefix = '%'
+
 @app.route('/', methods=['GET'])
 def landing(name=None):
   return render_template('public/index.htm', name=name)
@@ -76,9 +78,30 @@ def signup():
           ipn=config.ipn_url
         ))
 
-@app.route('/user/get-sites', methods=['POST'])
-def user_get_sites():
-  username = str(request.form['username'])
+@app.route('/<string:username>/sync', methods=['POST'])
+def user_sync(username):
+  password = str(request.form['password'])
+
+
+  user = User.fetch(db, username)
+  user_password = user.getPassword(password)
+
+  if not user_password:
+    return '{"result": false, "sites": {}}'
+
+  # Sync theirs into ours (where we don't have anything)
+  theirs = json.loads(request.form['sites'])
+  ours = user_password.getAllComments()
+
+  for site, comment in theirs.items():
+    if not site in ours:
+      user_password.setSite(site, comment)
+      ours[site] = comment
+
+  return json.dumps({"result": True, "sites": ours})
+
+@app.route('/<string:username>/get-sites', methods=['POST'])
+def user_get_sites(username):
   password = str(request.form['password'])
 
   user = User.fetch(db, username)

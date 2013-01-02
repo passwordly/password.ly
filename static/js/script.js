@@ -25,8 +25,7 @@ passwordly.autocompleteIdentifier = function(cb) {
       cache[password] = {'busy': true, 'callbacks': [cb]};
       
       // Go fetch the result for the password
-      $.post('/user/get-sites', {
-        'username': username,
+      $.post('/'+username+'/get-sites', {
         'password': password
       }, function(data, textStatus) {
         if (textStatus == 'success') {

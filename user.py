@@ -52,6 +52,14 @@ class UserPassword:
   def getSites(self):
     return self.db.hkeys(self.key)
 
+  def getAllComments(self):
+    results = {}
+
+    for site, value in self.db.hgetall(self.key).items():
+      results[site] = json.loads(value)['comment']
+
+    return results
+
   @staticmethod
   def fetch(db, username, password):
     'Convenience method to fetch a UserPassword object'
@@ -88,7 +96,6 @@ class User:
       return None
     else:
       return password.getSites()
-
 
   @staticmethod
   def fetch(db, username):
