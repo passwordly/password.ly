@@ -60,7 +60,7 @@ def signup():
 
     return redirect((config.paypal_url + '?cmd=_xclick' + \
         '&item_name=Signup+for+password.ly:+{username}' + \
-        '&item_number={username}&amount=15&business={email}' + \
+        '&item_number={username}&amount={price}&business={email}' + \
         '&custom={username}' + \
         '&currency_code=USD' + \
         '&notify_url={ipn}' + \
@@ -68,6 +68,7 @@ def signup():
         '&return=http://password.ly/{username}').format(
           username=username,
           email=config.paypal_email,
+          price=config.price,
           ipn=config.ipn_url
         ))
 
