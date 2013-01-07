@@ -2,6 +2,8 @@ import re
 import json
 
 from flask import request, render_template, redirect
+from werkzeug.datastructures import ImmutableOrderedMultiDict
+import requests
 
 from user import User, UserPassword
 from passwordly import generatePassword, createHash
@@ -77,7 +79,7 @@ def ipn():
   request.parameter_storage_class = ImmutableOrderedMultiDict
 
   # Store any/all ipn requests for future
-  db.rpush('ipn', json.dumps(requests.form))
+  db.rpush('ipn', json.dumps(request.form))
 
   validate_url = config.paypal_url + '?cmd=_notify-validate'
 
@@ -91,7 +93,10 @@ def ipn():
 
   if result.text == 'VERIFIED':
     print "PayPal transaction was verified successfully."
+
+    username = requests.form['item_number']
+    User.signup(db, username)
   else:
-    print 'Paypal IPN string {arg} did not validate'.format(arg=arg)
+    print 'Paypal IPN string did not validate'
 
   return result.text
