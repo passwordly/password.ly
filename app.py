@@ -18,6 +18,10 @@ from util import app, db
 import public
 import private
 
+@app.context_processor
+def inject_debug():
+  return dict(debug=config.debug)
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('public/404.htm'), 404

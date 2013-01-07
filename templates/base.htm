@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>password.ly</title>
-    <link rel="shortcut icon" href="/favicon.ico">
-		<link rel="stylesheet" href="/static/css/bootstrap.css">
-		<link rel="stylesheet" href="/static/css/styles.css">
-    <link href='//fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
-	</head>
+<head>
+<title>password.ly</title>
+<link rel="shortcut icon" href="/favicon.ico">
+{% if debug %}
+<link rel="stylesheet" href="/static/css/bootstrap.css">
+<link rel="stylesheet" href="/static/css/styles.css">
+{% else %}
+<link rel="stylesheet" href="/static/css/compiled.css">
+{% endif %}
+<link href='//fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+</head>
 	<body class="container-fluid">
     <div id="holder">
       <div class="container">
@@ -51,10 +55,14 @@
         </footer>
       </div>
     </div>
+{% if debug %}
 			<script src="/static/js/lib/jquery-1.8.2.min.js"></script>
 			<script src="/static/js/lib/bootstrap.min.js"></script>
       <script src="/static/js/lib/ZeroClipboard.min.js"></script>
       <script src="/static/js/script.js"></script>
+{% else %}
+      <script src="/static/js/compiled.js"></script>
+{% endif %}
       <script type="text/javascript">
         {% block scripts_end %}
         {% endblock scripts_end %}

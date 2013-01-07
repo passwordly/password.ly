@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cat static/css/bootstrap.css static/css/styles.css > static/css/compiled.css
+
+cat static/js/lib/jquery-1.8.2.min.js static/js/lib/bootstrap.min.js static/js/lib/ZeroClipboard.min.js static/js/script.js > static/js/compiled.js
