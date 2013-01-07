@@ -7,11 +7,9 @@ import requests
 
 from user import User, UserPassword
 from passwordly import generatePassword, createHash
-from util import db, app
+from util import db, app, log_event
 
 import config
-
-print app
 
 @app.route('/', methods=['GET'])
 def landing(name=None):
@@ -19,6 +17,7 @@ def landing(name=None):
 
 @app.route('/', methods=['POST'])
 def public_post(name=None):
+
   password = str(request.form['password'])
   site = str(request.form['site'])
   
@@ -29,6 +28,8 @@ def public_post(name=None):
     'site': site,
     'result': result
   }
+
+  log_event('public-generate')
   return render_template('public/password.htm', **params)
 
 @app.route('/signup', methods=['POST'])
@@ -60,6 +61,10 @@ def signup():
         'site': site
       }))
 
+    log_event('request-signup', {
+      'username': username
+      })
+
     return redirect((config.paypal_url + '?cmd=_xclick' + \
         '&item_name=Signup+for+password.ly:+{username}' + \
         '&item_number={username}&amount={price}&business={email}' + \
@@ -80,6 +85,7 @@ def ipn():
 
   # Store any/all ipn requests for future
   db.rpush('ipn', json.dumps(request.form))
+  log_event('ipn', request.form)
 
   # Fetch details from request
   username = str(request.form['item_number'])
@@ -110,6 +116,7 @@ def ipn():
     print "PayPal transaction was verified successfully."
 
     # Everything okay, actually perform the signup
+    log_event('signup-complete', {"username": username})
     User.signup(db, username)
   else:
     print 'Paypal IPN string did not validate'
