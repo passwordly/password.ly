@@ -81,6 +81,9 @@ def ipn():
   # Store any/all ipn requests for future
   db.rpush('ipn', json.dumps(request.form))
 
+  # Fetch details from request
+  username = str(request.form['item_number'])
+
   # Double check all the details are correct
   if request.form['receiver_email'] != config.paypal_email:
     return 'Payment was not sent to correct email address'
@@ -107,7 +110,6 @@ def ipn():
     print "PayPal transaction was verified successfully."
 
     # Everything okay, actually perform the signup
-    username = requests.form['item_number']
     User.signup(db, username)
   else:
     print 'Paypal IPN string did not validate'
