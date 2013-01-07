@@ -4,12 +4,12 @@ import time
 from passwordly import checkHash
 
 class UserPassword:
-  def __init__(self, db, username, index):
+  def __init__(self, db, username, hash):
     self.db = db
     self.username = username
-    self.index = index
+    self.hash = hash
 
-    self.key = 'sites-%s-%d' % (self.username, self.index)
+    self.key = 'sites-%s' % (self.hash)
 
   def setSite(self, site, comment=''):
     
@@ -79,7 +79,7 @@ class User:
     passwords = self.db.lrange('passwords-%s' % self.username, 0, -1)
     for index in range(len(passwords)):
       if checkHash(password=password, hash=passwords[index]):
-        return UserPassword(self.db, self.username, index)
+        return UserPassword(self.db, self.username, passwords[index])
     return None
 
   def addPasswordHash(self, hash):
@@ -87,7 +87,7 @@ class User:
     length = self.db.rpush('passwords-%s' % self.username, hash)
 
     # Return the index (length - 1)
-    return UserPassword(self.db, self.username, length-1)
+    return UserPassword(self.db, self.username, hash)
 
   def getSites(self, password):
     password = self.getPassword(password)
