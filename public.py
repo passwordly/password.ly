@@ -81,6 +81,18 @@ def ipn():
   # Store any/all ipn requests for future
   db.rpush('ipn', json.dumps(request.form))
 
+  # Double check all the details are correct
+  if request.form['receiver_email'] != config.paypal_email:
+    return 'Payment was not sent to correct email address'
+  elif request.form['payment_status'] != 'Completed':
+    return 'Payment status was not completed'
+  elif request.form['mc_currency'] != 'USD':
+    return 'Payment was not in USD'
+  elif request.form['mc_gross'] != ('%.2f' % config.price):
+    return 'Payment was not for the correct amount'
+
+
+  # Validate that the actual request is correct
   validate_url = config.paypal_url + '?cmd=_notify-validate'
 
   values = request.form
@@ -94,6 +106,7 @@ def ipn():
   if result.text == 'VERIFIED':
     print "PayPal transaction was verified successfully."
 
+    # Everything okay, actually perform the signup
     username = requests.form['item_number']
     User.signup(db, username)
   else:

@@ -3,7 +3,6 @@ import re
 import json
 
 from flask import request, render_template, redirect
-from werkzeug.datastructures import ImmutableOrderedMultiDict
 
 import requests
 import redis
