@@ -21,11 +21,16 @@ def set_distinct_id(value):
 
 # Log events
 def log_event(event, properties={}):
+  if 'X-Real-IP' in request.headers:
+    remote_addr = str(request.headers['X-Real-IP'])
+  else:
+    remote_addr = request.remote_addr
+
   db.rpush('events', json.dumps({
         'event': event,
         'distinct_id': get_distinct_id(),
         'timestamp': time.time(),
-        'remote_addr': request.remote_addr, 
+        'remote_addr': remote_addr, 
         'platform': request.user_agent.platform,
         'browser': request.user_agent.browser,
         'version': request.user_agent.version,
