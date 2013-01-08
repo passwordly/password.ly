@@ -24,6 +24,11 @@ def inject_debug():
 
 @app.before_request
 def before_request():
+  # Redirect to SSL
+  if config.ssl and request.headers.get('X-Forwarded-Proto', None) == 'http':
+    url = config.base_url + request.path
+    return redirect(url, 301)
+
   # Ensure we have a unique id
   if 'id' in request.cookies:
     distinct_id = request.cookies['id']
